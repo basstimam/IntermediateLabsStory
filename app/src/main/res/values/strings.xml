@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">DicodingStoryApp</string>
+    <string name="welcoming">Selamat datang di dicoding story app!</string>
+    <string name="welcoming_desc">Bergabunglah untuk menciptakan karya unggul dan membangun masa depan bersama dalam lingkungan penuh semangat dan kreativitas!</string>
+
+
+    <string name="register">Daftar</string>
+    <string name="login">Masuk</string>
+    <string name="login_text">Ayo masuk untuk berbagi cerita!</string>
+    <string name="register_text">Ayo bergabung bersama komunitas lainnya!</string>
+
+    <string name="email">Email</string>
+    <string name="password">Kata Sandi</string>
+    <string name="nama">Nama</string>
+
+    <string name="card_title">Lorem ipsum</string>
+    <string name="card_desc">LoremIpsuim</string>
+
+    <string name="input_name">Masukan nama</string>
+    <string name="input_email">Masukan email</string>
+    <string name="input_password">Masukan password</string>
+
+</resources>
