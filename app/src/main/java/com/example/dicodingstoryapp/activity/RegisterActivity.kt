@@ -21,7 +21,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.registerButton.setOnClickListener() {
-            getRegisterState()
+            postRegister()
         }
 
 
@@ -30,7 +30,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
-    private fun getRegisterState() {
+    private fun postRegister() {
         binding.apply {
            if (nameEditText.text.toString().isEmpty()) {
                nameEditText.error = "Nama tidak boleh kosong"
