@@ -1,4 +1,4 @@
-package com.example.dicodingstoryapp
+package com.example.dicodingstoryapp.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

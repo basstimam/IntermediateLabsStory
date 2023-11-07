@@ -33,28 +33,18 @@ class HomeActivity : AppCompatActivity() {
 
         dataStoreManager = DataStorePref.getInstance(this@HomeActivity)
 
-        supportActionBar?.hide()
 
-        binding.logoutFab.setOnClickListener {
+binding.apply {
+    logoutFab.setOnClickListener {
+        logoutDialog()
+    }
 
-            MaterialAlertDialogBuilder(this)
-                .setTitle(resources.getString(R.string.logoutDialogTitle))
+    postStoryFab.setOnClickListener{
+        val intent = Intent(this@HomeActivity, PostStoryActivity::class.java)
+        startActivity(intent)
+    }
+}
 
-                .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
-
-
-                }
-                .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
-
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    logout()
-
-
-                }
-                .show()
-
-        }
 
 
 lifecycleScope.launch {
@@ -85,6 +75,25 @@ lifecycleScope.launch {
     }
 
 
+    private fun logoutDialog(){
+        MaterialAlertDialogBuilder(this)
+            .setTitle(resources.getString(R.string.logoutDialogTitle))
+
+            .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
+                dialog.dismiss()
+
+
+            }
+            .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
+
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                logout()
+
+            }
+            .show()
+    }
+
 
     private fun logout() {
         lifecycleScope.launch {
@@ -93,4 +102,6 @@ lifecycleScope.launch {
             finish()
         }
     }
+
+
 }
