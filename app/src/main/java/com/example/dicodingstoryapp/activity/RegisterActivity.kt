@@ -63,7 +63,7 @@ class RegisterActivity : AppCompatActivity() {
 
                 lifecycleScope.launch {
                     try {
-                        val registerResponse = ApiConfig().getApiService().register(
+                        val registerResponse = ApiConfig().getApiService(null).register(
                             nameEditText.text.toString(),
                             emailEditText.text.toString(),
                             passwordEditText.text.toString()

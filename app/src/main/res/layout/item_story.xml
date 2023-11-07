@@ -23,7 +23,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="194dp"
-
+                android:id="@+id/imageCard"
                 app:srcCompat="@drawable/joining"
                 android:scaleType="centerCrop"
                 android:contentDescription="@string/card_title"
@@ -35,8 +35,19 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Title, secondary and supporting text -->
                 <TextView
+                    android:id="@+id/createdAt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/card_title"
+                    android:textSize="10sp"
+                    android:textStyle="italic"
+                    android:layout_marginBottom="8dp"/>
+
+
+
+                <TextView
+                    android:id="@+id/titleCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/card_title"
@@ -44,6 +55,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/descriptionCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"

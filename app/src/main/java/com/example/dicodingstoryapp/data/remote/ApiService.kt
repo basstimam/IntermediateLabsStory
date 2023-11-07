@@ -25,13 +25,9 @@ interface ApiService {
     ): LoginResponse
 
 
-    @FormUrlEncoded
+
     @GET("stories")
-    suspend fun getStories(
-
-
-
-    ): StoryResponse
+    suspend fun getStories(): StoryResponse
 
 
 }

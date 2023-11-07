@@ -32,10 +32,7 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
-        binding.deleteTokenButton.setOnClickListener(){
-            deleteToken()
 
-        }
 
        lifecycleScope.launch {
               val token = dataStoreManager.readToken()
@@ -73,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
-            val loginResponse = ApiConfig().getApiService().login(
+            val loginResponse = ApiConfig().getApiService(null).login(
                 binding.emailEditText.text.toString(),
                 binding.passwordEditText.text.toString()
             )
@@ -106,13 +103,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun deleteToken(){
-        lifecycleScope.launch {
-            dataStoreManager.deleteToken()
-            Toast.makeText(this@LoginActivity, "Token: " + dataStoreManager.readToken().toString(), Toast.LENGTH_SHORT).show()
-        }
 
-    }
 
 
 
