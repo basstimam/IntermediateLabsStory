@@ -31,9 +31,7 @@ class HomeActivity : AppCompatActivity() {
 
         dataStoreManager = DataStorePref.getInstance(this@HomeActivity)
 
-        binding.btnLogout.setOnClickListener {
-            logout()
-        }
+
 lifecycleScope.launch {
     homeViewModel.getAllStories(dataStoreManager.readToken().toString())
 }
@@ -51,6 +49,14 @@ lifecycleScope.launch {
 
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvStory.addItemDecoration(itemDecoration)
+
+        binding.rvStory.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+
     }
 
 
