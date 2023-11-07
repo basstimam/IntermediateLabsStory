@@ -48,6 +48,13 @@ dependencies {
     /*lifescycleScope*/
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
 
+    /*DataStore*/
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    /*Coroutines*/
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
+
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
