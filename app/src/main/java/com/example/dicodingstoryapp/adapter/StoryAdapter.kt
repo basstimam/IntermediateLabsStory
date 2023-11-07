@@ -1,19 +1,25 @@
-package com.example.dicodingstoryapp.adapter
+
+import com.example.dicodingstoryapp.data.remote.ListStoryItem
+import com.example.dicodingstoryapp.databinding.ItemStoryBinding
+
+
+
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+
 import android.view.ViewGroup
-import android.widget.ListAdapter
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.dicodingstoryapp.data.remote.ListStoryItem
-import com.example.dicodingstoryapp.data.remote.StoryResponse
-import com.example.dicodingstoryapp.databinding.ItemStoryBinding
 
-class StoryAdapter : androidx.recyclerview.widget.ListAdapter<ListStoryItem, StoryAdapter.ViewHolder>(DIFF_CALLBACK) {
+
+
+class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.ViewHolder>(DIFF_CALLBACK) {
 
 
 
@@ -31,7 +37,10 @@ class StoryAdapter : androidx.recyclerview.widget.ListAdapter<ListStoryItem, Sto
         holder.bind(story)
 
         holder.itemView.setOnClickListener {
-            Toast.makeText(holder.itemView.context, "Clicked", Toast.LENGTH_SHORT).show()
+
+           Toast.makeText(holder.itemView.context, story.name, Toast.LENGTH_SHORT).show()
+
+
 
         }
 
@@ -42,15 +51,15 @@ class StoryAdapter : androidx.recyclerview.widget.ListAdapter<ListStoryItem, Sto
 
 
         fun bind(story: ListStoryItem) {
-           binding.apply {
-               Glide.with(itemView.context)
-                   .load(story.photoUrl)
-                   .into(binding.imageCard)
+            binding.apply {
+                Glide.with(itemView.context)
+                    .load(story.photoUrl)
+                    .into(binding.imageCard)
 
-               titleCard.text = story.name
+                titleCard.text = story.name
                 descriptionCard.text = story.description
-               createdAt.text = story.createdAt
-           }
+                createdAt.text = story.createdAt
+            }
 
         }
     }
@@ -74,3 +83,4 @@ class StoryAdapter : androidx.recyclerview.widget.ListAdapter<ListStoryItem, Sto
 
 
 }
+

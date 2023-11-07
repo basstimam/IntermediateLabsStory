@@ -1,13 +1,16 @@
 package com.example.dicodingstoryapp.activity
 
+import StoryAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingstoryapp.R
-import com.example.dicodingstoryapp.adapter.StoryAdapter
+
 import com.example.dicodingstoryapp.data.local.DataStorePref
 import com.example.dicodingstoryapp.data.remote.ApiConfig
 import com.example.dicodingstoryapp.data.remote.ListStoryItem
@@ -38,10 +41,16 @@ lifecycleScope.launch {
 
         homeViewModel.story.observe(this) { story ->
 
-           Log.d("HomeActivity", "Story: " + story.toString())
-            Toast.makeText(this, story.toString(), Toast.LENGTH_SHORT).show()
-
+            val adapter = StoryAdapter()
+            adapter.submitList(story)
+            binding.rvStory.adapter = adapter
         }
+
+        val layoutManager = LinearLayoutManager(this)
+        binding.rvStory.layoutManager = layoutManager
+
+        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
+        binding.rvStory.addItemDecoration(itemDecoration)
     }
 
 
