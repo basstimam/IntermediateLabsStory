@@ -13,6 +13,7 @@
         android:layout_width="370dp"
         android:layout_height="264dp"
         android:layout_margin="60dp"
+        android:scaleType="fitXY"
         android:contentDescription="welcome"
         android:src="@drawable/home"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,6 +64,7 @@ android:layout_marginTop="16dp"
             android:layout_margin="8dp"
             android:text="@string/login"
             android:layout_marginRight="16dp"
+
 
 
             />

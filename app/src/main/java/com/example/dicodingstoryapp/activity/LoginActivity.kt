@@ -85,10 +85,6 @@ class LoginActivity : AppCompatActivity() {
                     finish()
 
 
-
-                Toast.makeText(this@LoginActivity, "Token: " + dataStoreManager.readToken().toString(), Toast.LENGTH_SHORT).show()
-
-
             } else {
                 Toast.makeText(this@LoginActivity, "Login Failed", Toast.LENGTH_SHORT).show()
 

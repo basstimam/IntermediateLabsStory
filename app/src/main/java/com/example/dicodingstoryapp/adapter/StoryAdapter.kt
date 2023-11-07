@@ -1,4 +1,5 @@
 
+import android.app.Activity
 import com.example.dicodingstoryapp.data.remote.ListStoryItem
 import com.example.dicodingstoryapp.databinding.ItemStoryBinding
 
@@ -7,16 +8,16 @@ import com.example.dicodingstoryapp.databinding.ItemStoryBinding
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-
+import androidx.core.util.Pair
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-
+import com.example.dicodingstoryapp.activity.DetailStoryActivity
 
 
 class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.ViewHolder>(DIFF_CALLBACK) {
@@ -36,13 +37,7 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.ViewHolder>(DIFF_CA
 
         holder.bind(story)
 
-        holder.itemView.setOnClickListener {
 
-           Toast.makeText(holder.itemView.context, story.name, Toast.LENGTH_SHORT).show()
-
-
-
-        }
 
 
     }
@@ -59,8 +54,40 @@ class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.ViewHolder>(DIFF_CA
                 titleCard.text = story.name
                 descriptionCard.text = story.description
                 createdAt.text = story.createdAt
+
+
             }
 
+            itemView.setOnClickListener {
+                val bundle = Bundle().apply {
+                    putString("NAME", story.name)
+                    putString("IMAGE", story.photoUrl)
+                    putString("DESCRIPTION", story.description)
+                    putString("CREATEDAT", story.createdAt)
+
+                    if (story.lat == null) putString("LAT", "Tidak Tersedia")
+                    else putString("LAT", story.lat.toString())
+
+                    if (story.lon == null) putString("LON", "Tidak Tersedia")
+                    else putString("LON", story.lon.toString())
+                }
+
+                val optionsCompat: ActivityOptionsCompat =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        itemView.context as Activity,
+                        Pair(binding.imageCard, "detailImageStory"),
+Pair(binding.titleCard, "detailTitleStory"),
+Pair(binding.descriptionCard, "detailDescriptionStory"),
+                        Pair(binding.titleCard, "latitude"),
+                        Pair(binding.descriptionCard, "longitude")
+
+                    )
+
+
+                val intent = Intent(itemView.context, DetailStoryActivity::class.java)
+                intent.putExtras(bundle)
+                startActivity(itemView.context, intent, optionsCompat.toBundle())
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.dicodingstoryapp.activity
 
 import StoryAdapter
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import com.example.dicodingstoryapp.data.remote.ApiConfig
 import com.example.dicodingstoryapp.data.remote.ListStoryItem
 import com.example.dicodingstoryapp.databinding.ActivityHomeBinding
 import com.example.dicodingstoryapp.viewmodel.HomeViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
@@ -30,6 +32,29 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         dataStoreManager = DataStorePref.getInstance(this@HomeActivity)
+
+        supportActionBar?.hide()
+
+        binding.logoutFab.setOnClickListener {
+
+            MaterialAlertDialogBuilder(this)
+                .setTitle(resources.getString(R.string.logoutDialogTitle))
+
+                .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
+
+
+                }
+                .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
+
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    logout()
+
+
+                }
+                .show()
+
+        }
 
 
 lifecycleScope.launch {
@@ -64,6 +89,7 @@ lifecycleScope.launch {
     private fun logout() {
         lifecycleScope.launch {
             dataStoreManager.deleteToken()
+            Toast.makeText(this@HomeActivity, "Logout Success", Toast.LENGTH_SHORT).show()
             finish()
         }
     }
