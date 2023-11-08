@@ -54,7 +54,7 @@
             app:fab_color="@color/green"
             android:layout_height="wrap_content"
             android:id="@+id/postStory_fab"
-            app:fab_icon="@drawable/camera_icon"
+            app:fab_icon="@drawable/story_icon"
             app:fab_orientation="portrait"
             app:label_text="Post Story"
             />

@@ -28,4 +28,6 @@ Non diam phasellus vestibulum lorem. Ipsum nunc aliquet bibendum enim facilisis 
     <string name="cancel">Tidak</string>
     <string name="accept">Ya</string>
 
+
+    <string name="uploadStory">Upload Story</string>
 </resources>

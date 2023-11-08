@@ -68,8 +68,6 @@ lifecycleScope.launch {
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
 
 
-        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
-
 
 
 
