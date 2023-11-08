@@ -83,6 +83,11 @@ dependencies {
     /*FAB Expand*/
     implementation("com.nambimobile.widgets:expandable-fab:1.2.1")
 
+    /*ZoomRecylerView*/
+    implementation("com.github.Spikeysanju:ZoomRecylerLayout:1.0")
+
+    /*Toast*/
+    implementation("com.github.Spikeysanju:MotionToast:1.4")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

@@ -5,13 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
+import com.example.dicodingstoryapp.R
 import com.example.dicodingstoryapp.data.local.DataStorePref
 
 import com.example.dicodingstoryapp.data.remote.ApiConfig
 import com.example.dicodingstoryapp.databinding.ActivityLoginBinding
 
 import kotlinx.coroutines.launch
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 
 class LoginActivity : AppCompatActivity() {
 
@@ -64,9 +68,6 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 passwordEditTextLayout.error = null
             }
-
-            Log.d("LoginActivity", "Email : ${emailEditText.text}")
-            Log.d("LoginActivity", "Password : ${passwordEditText.text}")
         }
 
         lifecycleScope.launch {
@@ -76,7 +77,15 @@ class LoginActivity : AppCompatActivity() {
             )
 
             if(loginResponse.error == false) {
-                Toast.makeText(this@LoginActivity, "Login Success", Toast.LENGTH_SHORT).show()
+               MotionToast.createColorToast(
+                    this@LoginActivity,
+                    "Login Success",
+                    "Welcome to Story App",
+                    MotionToastStyle.SUCCESS,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.LONG_DURATION,
+                    ResourcesCompat.getFont(this@LoginActivity, www.sanju.motiontoast.R.font.helvetica_regular)
+               )
 
 
                     dataStoreManager.saveToken(loginResponse.loginResult?.token.toString())

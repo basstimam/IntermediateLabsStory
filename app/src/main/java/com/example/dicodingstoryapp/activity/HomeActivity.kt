@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,9 @@ import com.example.dicodingstoryapp.databinding.ActivityHomeBinding
 import com.example.dicodingstoryapp.viewmodel.HomeViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
+import www.sanju.zoomrecyclerlayout.ZoomRecyclerLayout
 
 class HomeActivity : AppCompatActivity() {
 
@@ -59,18 +63,15 @@ lifecycleScope.launch {
             binding.rvStory.adapter = adapter
         }
 
-        val layoutManager = LinearLayoutManager(this)
+        val layoutManager = ZoomRecyclerLayout(this)
         binding.rvStory.layoutManager = layoutManager
+        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+
 
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
-        binding.rvStory.addItemDecoration(itemDecoration)
 
-        binding.rvStory.addItemDecoration(
-            DividerItemDecoration(
-                this,
-                DividerItemDecoration.VERTICAL
-            )
-        )
+
+
 
     }
 
@@ -98,7 +99,15 @@ lifecycleScope.launch {
     private fun logout() {
         lifecycleScope.launch {
             dataStoreManager.deleteToken()
-            Toast.makeText(this@HomeActivity, "Logout Success", Toast.LENGTH_SHORT).show()
+            MotionToast.createColorToast(
+                this@HomeActivity,
+                "Logout Success",
+                "Thank you for using Dicoding Story App",
+                MotionToastStyle.INFO,
+                MotionToast.GRAVITY_BOTTOM,
+                MotionToast.LONG_DURATION,
+                ResourcesCompat.getFont(this@HomeActivity, www.sanju.motiontoast.R.font.helvetica_regular)
+            )
             finish()
         }
     }
