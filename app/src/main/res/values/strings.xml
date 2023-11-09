@@ -30,4 +30,7 @@ Non diam phasellus vestibulum lorem. Ipsum nunc aliquet bibendum enim facilisis 
 
 
     <string name="uploadStory">Upload Story</string>
+
+
+    <string name="descStory">Description</string>
 </resources>
