@@ -8,6 +8,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.dicodingstoryapp.databinding.ActivityPostStoryBinding
+import com.example.dicodingstoryapp.getImageUri
 
 class PostStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPostStoryBinding
@@ -23,6 +24,11 @@ class PostStoryActivity : AppCompatActivity() {
         binding.apply {
             galeryFab.setOnClickListener {
                 startGallery()
+
+            }
+
+            cameraFab.setOnClickListener {
+                startCamera()
             }
         }
     }
@@ -54,6 +60,21 @@ class PostStoryActivity : AppCompatActivity() {
         currentImageUri?.let{
             Log.d("Photo Picker", "Uri: $it")
             binding.previewImageView.setImageURI(it)
+        }
+    }
+
+
+    private fun startCamera(){
+        currentImageUri = getImageUri(this)
+launcherIntentCamera.launch(currentImageUri)
+
+    }
+
+    private val launcherIntentCamera = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { isSuccess ->
+        if (isSuccess) {
+            showImage()
         }
     }
 }
