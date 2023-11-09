@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -34,7 +35,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         dataStoreManager = DataStorePref.getInstance(this@HomeActivity)
 
 
@@ -67,28 +68,22 @@ lifecycleScope.launch {
         binding.rvStory.layoutManager = layoutManager
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
 
-
-
-
-
     }
 
 
     private fun logoutDialog(){
         MaterialAlertDialogBuilder(this)
             .setTitle(resources.getString(R.string.logoutDialogTitle))
-
             .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
                 dialog.dismiss()
-
-
             }
             .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
-
                 val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
-                logout()
 
+                logout()
+                finish()
             }
             .show()
     }
@@ -97,15 +92,7 @@ lifecycleScope.launch {
     private fun logout() {
         lifecycleScope.launch {
             dataStoreManager.deleteToken()
-            MotionToast.createColorToast(
-                this@HomeActivity,
-                "Logout Success",
-                "Thank you for using Dicoding Story App",
-                MotionToastStyle.INFO,
-                MotionToast.GRAVITY_BOTTOM,
-                MotionToast.LONG_DURATION,
-                ResourcesCompat.getFont(this@HomeActivity, www.sanju.motiontoast.R.font.helvetica_regular)
-            )
+            Toast.makeText(this@HomeActivity, "Logout Success", Toast.LENGTH_SHORT).show()
             finish()
         }
     }

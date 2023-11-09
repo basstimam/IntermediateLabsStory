@@ -9,7 +9,9 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import com.example.dicodingstoryapp.data.local.DataStorePref
 import com.example.dicodingstoryapp.data.remote.ApiConfig
@@ -44,6 +46,7 @@ class PostStoryActivity : AppCompatActivity() {
         binding = ActivityPostStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         dataStoreManager = DataStorePref.getInstance(this@PostStoryActivity)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         binding.apply {
             galeryFab.setOnClickListener {
@@ -86,7 +89,12 @@ class PostStoryActivity : AppCompatActivity() {
 
     private fun showImage(){
         currentImageUri?.let{
-            Log.d("Photo Picker", "Uri: $it")
+            val imageFile = uriToFile(it, this)
+
+            if (imageFile.length() > 10485760) {
+                Toast.makeText(this, "Ukuran gambar terlalu besar", Toast.LENGTH_SHORT).show()
+                return
+            }
             binding.previewImageView.setImageURI(it)
         }
     }
@@ -94,7 +102,7 @@ class PostStoryActivity : AppCompatActivity() {
 
     private fun startCamera(){
         currentImageUri = getImageUri(this)
-launcherIntentCamera.launch(currentImageUri)
+        launcherIntentCamera.launch(currentImageUri)
 
     }
 
@@ -107,48 +115,40 @@ launcherIntentCamera.launch(currentImageUri)
     }
 
     private fun uploadImage() {
+        if (binding.descTextEdit.text.toString().isEmpty()) {
+            binding.descTextEdit.error = "Deskripsi tidak boleh kosong"
+            return
+        }
+
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this).reduceFileImage()
-            Log.d("Image File", "showImage: ${imageFile.path}")
             val description = binding.descTextEdit.text.toString().toRequestBody("text/plain".toMediaType())
-
             val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
-            val multipartBody = MultipartBody.Part.createFormData(
+            val multipartBody = createFormData(
                 "photo",
                 imageFile.name,
                 requestImageFile
             )
+
+
+
+
             lifecycleScope.launch {
                 try {
 
                     val apiService = ApiConfig().getApiService(dataStoreManager.readToken())
                     val successResponse = apiService.uploadImage(multipartBody, description)
 
-                    MotionToast.createColorToast(
-                        this@PostStoryActivity,
-                        "Success",
-                        successResponse.message,
-                        MotionToastStyle.SUCCESS,
-                        MotionToast.GRAVITY_BOTTOM,
-                        MotionToast.LONG_DURATION,
-                        ResourcesCompat.getFont(this@PostStoryActivity, www.sanju.motiontoast.R.font.helvetica_regular)
-                    )
+                    Toast.makeText(this@PostStoryActivity, successResponse.message, Toast.LENGTH_SHORT).show()
 
                     val intent = Intent(this@PostStoryActivity, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)
                     finish()
                 } catch (e: HttpException) {
                     val errorBody = e.response()?.errorBody()?.string()
                     val errorResponse = Gson().fromJson(errorBody, FileUploadResponse::class.java)
-                   MotionToast.createColorToast(
-                            this@PostStoryActivity,
-                            "Error",
-                            errorResponse.message,
-                            MotionToastStyle.ERROR,
-                            MotionToast.GRAVITY_BOTTOM,
-                            MotionToast.LONG_DURATION,
-                            ResourcesCompat.getFont(this@PostStoryActivity, www.sanju.motiontoast.R.font.helvetica_regular)
-                        )
+                   Toast.makeText(this@PostStoryActivity, errorResponse.message, Toast.LENGTH_SHORT).show()
                 }
             }
         } ?: Toast.makeText(this, "Gambar tidak ditemukan", Toast.LENGTH_SHORT).show()

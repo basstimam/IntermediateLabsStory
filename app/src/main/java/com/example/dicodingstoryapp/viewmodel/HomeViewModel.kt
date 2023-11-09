@@ -21,14 +21,14 @@ class HomeViewModel : ViewModel() {
                 val response = client.getStories()
 
                 if (response.error == false) {
-                    // Filter out null elements and update the MutableLiveData
+
                     _story.value = response.listStory?.filterNotNull()
                 } else {
-                    // Handle API call failure
+
                     Log.e(TAG, "Failed to fetch stories: ${response.message.toString()}")
                 }
             } catch (e: Exception) {
-                // Handle other exceptions
+
                 Log.e(TAG, "Exception occurred: ${e.message}")
             }
         }

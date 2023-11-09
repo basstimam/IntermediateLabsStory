@@ -1,15 +1,20 @@
 package com.example.dicodingstoryapp.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 
 import com.example.dicodingstoryapp.data.remote.ApiConfig
 import com.example.dicodingstoryapp.databinding.ActivityRegisterBinding
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody.Companion.toResponseBody
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -19,24 +24,26 @@ class RegisterActivity : AppCompatActivity() {
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        binding.registerButton.setOnClickListener() {
+        binding.registerButton.setOnClickListener {
             postRegister()
         }
-
-
 
 
     }
 
 
     private fun postRegister() {
+
+        showLoading(true)
         binding.apply {
-           if (nameEditText.text.toString().isEmpty()) {
-               nameEditText.error = "Nama tidak boleh kosong"
-           }else {
-               nameEditText.error = null
-           }
+
+            if (nameEditText.text.toString().isEmpty()) {
+                nameEditTextLayout.error = "Nama tidak boleh kosong"
+            } else {
+                nameEditTextLayout.error = null
+            }
 
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailEditText.text.toString())
                     .matches()
@@ -52,15 +59,11 @@ class RegisterActivity : AppCompatActivity() {
                 passwordEditTextLayout.error = null
             }
 
-
-
-            Log.d("RegisterActivity", "Name : ${nameEditText.text}")
-                Log.d("RegisterActivity", "Email : ${emailEditText.text}")
-                Log.d("RegisterActivity", "Password : ${passwordEditText.text}")
-
-
-
-
+            if (nameEditText.text.toString().isNotEmpty() &&
+                android.util.Patterns.EMAIL_ADDRESS.matcher(emailEditText.text.toString())
+                    .matches() &&
+                passwordEditText.text?.length!! >= 8
+            ) {
                 lifecycleScope.launch {
                     try {
                         val registerResponse = ApiConfig().getApiService(null).register(
@@ -69,36 +72,54 @@ class RegisterActivity : AppCompatActivity() {
                             passwordEditText.text.toString()
                         )
 
+
                         registerResponse.message?.let { Log.d("RegisterActivity", it) }
 
                         if (registerResponse.error == false) {
-                            Toast.makeText(
+
+                          Toast.makeText(
                                 this@RegisterActivity,
                                 "Registrasi berhasil",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            Log.d("RegisterActivity", registerResponse.message.toString())
+
+
+                            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                            startActivity(intent)
+                            finish()
                         } else {
-                            Toast.makeText(
-                                this@RegisterActivity,
-                                "Registrasi gagal",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            showLoading(false)
+                            registerResponse.message?.let { message ->
+                                Toast.makeText(
+                                    this@RegisterActivity,
+                                    message,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
                     } catch (e: Exception) {
+                        showLoading(false)
+
+                        Log.e("RegisterActivity", "Error: ${e.message?.toResponseBody()}")
                         Toast.makeText(
                             this@RegisterActivity,
-                            "Registrasi gagal",
+                            "Email telah digunakan",
                             Toast.LENGTH_SHORT
                         ).show()
-                        Log.e("RegisterActivity", "getRegisterState: ${e.message.toString()}")
                     }
                 }
-
             }
-
-
         }
     }
+
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.progressBar.visibility = android.view.View.VISIBLE
+        } else {
+            binding.progressBar.visibility = android.view.View.GONE
+        }
+    }
+}
+
 
 
