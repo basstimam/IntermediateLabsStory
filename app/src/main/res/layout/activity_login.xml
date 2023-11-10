@@ -16,6 +16,7 @@
         tools:ignore="MissingConstraints" />
 
     <ImageView
+        android:contentDescription=""
         android:id="@+id/imageView"
         android:layout_width="356dp"
         android:layout_height="226dp"
@@ -26,7 +27,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal2"
-        app:srcCompat="@drawable/login" />
+        app:srcCompat="@drawable/login"
+        android:importantForAccessibility="no" />
 
     <TextView
         android:id="@+id/titleTextView"
@@ -69,10 +71,10 @@
         app:layout_constraintTop_toBottomOf="@+id/emailTextView"
         >
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.example.dicodingstoryapp.CustomEditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="51dp"
             android:ems="10"
             android:inputType="textEmailAddress"
             tools:ignore="SpeakableTextPresentCheck" />
@@ -102,7 +104,7 @@
         app:layout_constraintTop_toBottomOf="@+id/passwordTextView"
        >
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.example.dicodingstoryapp.CustomEditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

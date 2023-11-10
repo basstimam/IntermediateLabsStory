@@ -47,8 +47,8 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
     /*lifescycleScope*/
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
     implementation("androidx.activity:activity-ktx:1.8.0")
 
@@ -65,7 +65,9 @@ dependencies {
     /*Room*/
     val room_version = "2.5.0"
 
+    //noinspection GradleDependency,GradleDependency
     implementation("androidx.room:room-runtime:$room_version")
+    //noinspection GradleDependency
     annotationProcessor("androidx.room:room-compiler:$room_version")
 
 
@@ -78,7 +80,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.activity:activity-ktx:1.8.0")
-    implementation("androidx.fragment:fragment-ktx:1.3.6")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
 
 
     /*FAB Expand*/
@@ -87,8 +89,7 @@ dependencies {
     /*ZoomRecylerView*/
     implementation("com.github.Spikeysanju:ZoomRecylerLayout:1.0")
 
-    /*Toast*/
-    implementation("com.github.Spikeysanju:MotionToast:1.4")
+
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

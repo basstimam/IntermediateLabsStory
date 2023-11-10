@@ -26,7 +26,8 @@
         app:layout_constraintStart_toStartOf="parent"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal2"
-        app:srcCompat="@drawable/joining" />
+        app:srcCompat="@drawable/joining"
+        android:importantForAccessibility="no" />
 
     <TextView
         android:id="@+id/titleTextView"
@@ -70,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/nameTextView"
        >
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.example.dicodingstoryapp.CustomEditText
             android:id="@+id/nameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,7 +104,7 @@
 
         app:layout_constraintTop_toBottomOf="@+id/emailTextView">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.example.dicodingstoryapp.CustomEditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -137,7 +138,7 @@
         app:passwordToggleEnabled="true"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextViewRegister">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.example.dicodingstoryapp.CustomEditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

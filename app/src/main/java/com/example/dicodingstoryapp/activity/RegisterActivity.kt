@@ -1,20 +1,17 @@
 package com.example.dicodingstoryapp.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
-
 import com.example.dicodingstoryapp.data.remote.ApiConfig
 import com.example.dicodingstoryapp.databinding.ActivityRegisterBinding
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody.Companion.toResponseBody
-import www.sanju.motiontoast.MotionToast
-import www.sanju.motiontoast.MotionToastStyle
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -26,8 +23,14 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        binding.registerButton.setOnClickListener {
-            postRegister()
+        binding.apply {
+            nameEditText.doOnTextChanged { _, _, _, _ -> validator() }
+            emailEditText.doOnTextChanged { _, _, _, _ -> validator() }
+            passwordEditText.doOnTextChanged { _, _, _, _ -> validator() }
+
+            registerButton.setOnClickListener {
+                postRegister()
+            }
         }
 
 
@@ -39,31 +42,7 @@ class RegisterActivity : AppCompatActivity() {
         showLoading(true)
         binding.apply {
 
-            if (nameEditText.text.toString().isEmpty()) {
-                nameEditTextLayout.error = "Nama tidak boleh kosong"
-            } else {
-                nameEditTextLayout.error = null
-            }
 
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailEditText.text.toString())
-                    .matches()
-            ) {
-                emailInputLayout.error = "Email tidak valid"
-            } else {
-                emailInputLayout.error = null
-            }
-
-            if (passwordEditText.text?.length!! < 8) {
-                passwordEditTextLayout.error = "Password minimal 8 karakter"
-            } else {
-                passwordEditTextLayout.error = null
-            }
-
-            if (nameEditText.text.toString().isNotEmpty() &&
-                android.util.Patterns.EMAIL_ADDRESS.matcher(emailEditText.text.toString())
-                    .matches() &&
-                passwordEditText.text?.length!! >= 8
-            ) {
                 lifecycleScope.launch {
                     try {
                         val registerResponse = ApiConfig().getApiService(null).register(
@@ -108,7 +87,7 @@ class RegisterActivity : AppCompatActivity() {
                         ).show()
                     }
                 }
-            }
+
         }
     }
 
@@ -117,6 +96,18 @@ class RegisterActivity : AppCompatActivity() {
             binding.progressBar.visibility = android.view.View.VISIBLE
         } else {
             binding.progressBar.visibility = android.view.View.GONE
+        }
+    }
+
+    private fun validator() {
+        var isValid = true
+
+        binding.apply {
+            if (nameEditText.error != null || nameEditText.text.toString().isEmpty()) isValid = false
+            if (emailEditText.error != null || emailEditText.text.toString().isEmpty()) isValid = false
+            if (passwordEditText.error != null || passwordEditText.text.toString().isEmpty()) isValid = false
+
+            registerButton.isEnabled = isValid
         }
     }
 }

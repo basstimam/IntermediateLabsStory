@@ -2,24 +2,19 @@ package com.example.dicodingstoryapp.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
-import com.example.dicodingstoryapp.R
 import com.example.dicodingstoryapp.data.local.DataStorePref
-
 import com.example.dicodingstoryapp.data.remote.ApiConfig
 import com.example.dicodingstoryapp.databinding.ActivityLoginBinding
-
 import kotlinx.coroutines.launch
-import www.sanju.motiontoast.MotionToast
-import www.sanju.motiontoast.MotionToastStyle
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -34,9 +29,15 @@ class LoginActivity : AppCompatActivity() {
         dataStoreManager = DataStorePref.getInstance(this@LoginActivity)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        binding.loginButton.setOnClickListener {
-            postLogin()
-        }
+       binding.apply {
+                passwordEditText.doOnTextChanged { _, _, _, _ -> validator() }
+
+              emailEditText.doOnTextChanged { _, _, _, _ -> validator() }
+
+              loginButton.setOnClickListener {
+                postLogin()
+              }
+       }
 
 
     }
@@ -81,11 +82,17 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLoading(state: Boolean) {
-        if (state) {
-            binding.progressBar.visibility = android.view.View.VISIBLE
-        } else {
-            binding.progressBar.visibility = android.view.View.GONE
+    private fun showLoading(state: Boolean)
+    { binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE }
+
+    private fun validator() {
+        var isValid = true
+
+        binding.apply {
+            if (emailEditText.error != null || emailEditText.text.toString().isEmpty()) isValid = false
+            if (passwordEditText.error != null || passwordEditText.text.toString().isEmpty()) isValid = false
+
+            loginButton.isEnabled = isValid
         }
     }
 

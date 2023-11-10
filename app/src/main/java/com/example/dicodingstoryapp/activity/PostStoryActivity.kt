@@ -2,16 +2,13 @@ package com.example.dicodingstoryapp.activity
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import com.example.dicodingstoryapp.data.local.DataStorePref
 import com.example.dicodingstoryapp.data.remote.ApiConfig
@@ -21,18 +18,12 @@ import com.example.dicodingstoryapp.getImageUri
 import com.example.dicodingstoryapp.reduceFileImage
 import com.example.dicodingstoryapp.uriToFile
 import com.google.gson.Gson
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MultipartBody
 import okhttp3.MultipartBody.Part.Companion.createFormData
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
-import www.sanju.motiontoast.MotionToast
-import www.sanju.motiontoast.MotionToastStyle
-import java.io.File
-import kotlin.math.log
 
 class PostStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPostStoryBinding

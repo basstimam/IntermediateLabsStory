@@ -1,23 +1,18 @@
-
 import android.app.Activity
-import com.example.dicodingstoryapp.data.remote.ListStoryItem
-import com.example.dicodingstoryapp.databinding.ItemStoryBinding
-
-
-
-
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.core.util.Pair
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dicodingstoryapp.activity.DetailStoryActivity
+import com.example.dicodingstoryapp.data.remote.ListStoryItem
+import com.example.dicodingstoryapp.databinding.ItemStoryBinding
 
 
 class StoryAdapter : ListAdapter<ListStoryItem, StoryAdapter.ViewHolder>(DIFF_CALLBACK) {
@@ -103,8 +98,7 @@ Pair(binding.descriptionCard, "detailDescriptionStory"),
 
         }
 
-        const val NAME = "NAME"
-        const val AVATAR = "AVATAR"
+
     }
 
 

@@ -33,4 +33,17 @@ Non diam phasellus vestibulum lorem. Ipsum nunc aliquet bibendum enim facilisis 
 
 
     <string name="descStory">Description</string>
+    <string name="detailImageStory">Preview Image Story</string>
+
+    <string name="passwordTextValidation">
+        Password harus memiliki minimal 8 karakter.
+    </string>
+
+    <string name="emailTextValidation">
+        Email tidak valid.
+    </string>
+
+    <string name="nameTextValidation">
+        Nama tidak boleh kosong minimal 3 karakter.
+    </string>
 </resources>

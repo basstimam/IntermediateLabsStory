@@ -2,27 +2,20 @@ package com.example.dicodingstoryapp.activity
 
 import StoryAdapter
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingstoryapp.R
-
 import com.example.dicodingstoryapp.data.local.DataStorePref
-import com.example.dicodingstoryapp.data.remote.ApiConfig
-import com.example.dicodingstoryapp.data.remote.ListStoryItem
 import com.example.dicodingstoryapp.databinding.ActivityHomeBinding
+
 import com.example.dicodingstoryapp.viewmodel.HomeViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
-import www.sanju.motiontoast.MotionToast
-import www.sanju.motiontoast.MotionToastStyle
 import www.sanju.zoomrecyclerlayout.ZoomRecyclerLayout
 
 class HomeActivity : AppCompatActivity() {
@@ -74,10 +67,10 @@ lifecycleScope.launch {
     private fun logoutDialog(){
         MaterialAlertDialogBuilder(this)
             .setTitle(resources.getString(R.string.logoutDialogTitle))
-            .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
+            .setNeutralButton(resources.getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
-            .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
+            .setPositiveButton(resources.getString(R.string.accept)) { _, _ ->
                 val intent = Intent(this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
