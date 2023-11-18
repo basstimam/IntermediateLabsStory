@@ -10,10 +10,12 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingstoryapp.R
+import com.example.dicodingstoryapp.adapter.LoadingStateAdapter
 import com.example.dicodingstoryapp.data.local.DataStorePref
 import com.example.dicodingstoryapp.databinding.ActivityHomeBinding
 
 import com.example.dicodingstoryapp.viewmodel.HomeViewModel
+import com.example.dicodingstoryapp.viewmodel.ViewmodelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import www.sanju.zoomrecyclerlayout.ZoomRecyclerLayout
@@ -22,7 +24,9 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var dataStoreManager: DataStorePref
-    private val homeViewModel by viewModels<HomeViewModel>()
+    private val homeViewModel: HomeViewModel by viewModels {
+        ViewmodelFactory(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +54,15 @@ lifecycleScope.launch {
 }
 
 
-        homeViewModel.story.observe(this) { story ->
+        homeViewModel.pagingStory.observe(this) { story ->
 
             val adapter = StoryAdapter()
-            adapter.submitList(story)
-            binding.rvStory.adapter = adapter
+            adapter.submitData(lifecycle, story)
+            binding.rvStory.adapter = adapter.withLoadStateFooter(
+                footer = LoadingStateAdapter.LoadingStateAdapter {
+                    adapter.retry()
+                }
+            )
         }
 
         val layoutManager = ZoomRecyclerLayout(this)

@@ -6,7 +6,10 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlin.concurrent.Volatile
 
 class DataStorePref(val context: Context){
@@ -26,9 +29,16 @@ suspend fun saveToken(token: String){
     }
 }
 
-    suspend fun readToken(): String? {
-        val jwtToken = context.dataStore.data.first()[TOKEN]
-        return jwtToken
+    fun readToken(): String? {
+        return runBlocking {
+            withContext(Dispatchers.IO) {
+                // Access the data synchronously
+                val data = context.dataStore.data.first()
+
+                // Retrieve the token from the data
+                data[PreferencesKeys.TOKEN]
+            }
+        }
     }
 
     suspend fun deleteToken(): String{
@@ -38,10 +48,10 @@ suspend fun saveToken(token: String){
         return "Token Deleted"
     }
 
-    fun closeDataStore(){
-
-
+    private object PreferencesKeys {
+        val TOKEN = stringPreferencesKey("TOKEN")
     }
+
 
 
 

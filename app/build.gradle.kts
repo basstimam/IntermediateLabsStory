@@ -89,7 +89,8 @@ dependencies {
     /*ZoomRecylerView*/
     implementation("com.github.Spikeysanju:ZoomRecylerLayout:1.0")
 
-
+/*Paging*/
+    implementation("androidx.paging:paging-runtime-ktx:3.1.0")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

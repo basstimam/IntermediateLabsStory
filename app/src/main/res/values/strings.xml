@@ -46,4 +46,5 @@ Non diam phasellus vestibulum lorem. Ipsum nunc aliquet bibendum enim facilisis 
     <string name="nameTextValidation">
         Nama tidak boleh kosong minimal 3 karakter.
     </string>
+    <string name="retry">Retry</string>
 </resources>
