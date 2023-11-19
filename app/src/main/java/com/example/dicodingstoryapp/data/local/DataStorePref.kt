@@ -15,7 +15,14 @@ import kotlin.concurrent.Volatile
 class DataStorePref(val context: Context){
 
     private val JWT_KEY = "JWT_TOKEN"
+
+
+
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = JWT_KEY)
+
+
+
+
 
 
 
@@ -48,10 +55,11 @@ suspend fun saveToken(token: String){
         return "Token Deleted"
     }
 
+
     private object PreferencesKeys {
         val TOKEN = stringPreferencesKey("TOKEN")
-    }
 
+    }
 
 
 

@@ -45,6 +45,11 @@ binding.apply {
         val intent = Intent(this@HomeActivity, PostStoryActivity::class.java)
         startActivity(intent)
     }
+
+    mapsFab.setOnClickListener {
+        val intent = Intent(this@HomeActivity, MapsActivity::class.java)
+        startActivity(intent)
+    }
 }
 
 

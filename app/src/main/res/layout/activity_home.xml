@@ -59,6 +59,16 @@
             app:label_text="Post Story"
             />
 
+        <com.nambimobile.widgets.efab.FabOption
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_color="@color/green"
+            android:id="@+id/maps_fab"
+            app:fab_icon="@drawable/baseline_map_24"
+            app:fab_orientation="portrait"
+            app:label_text="Maps"
+            />
+
 
 
     </com.nambimobile.widgets.efab.ExpandableFabLayout>

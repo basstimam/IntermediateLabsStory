@@ -1,6 +1,9 @@
+import com.sun.xml.fastinfoset.sax.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -15,11 +18,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "GMP_KEY", "\"AIzaSyDHbdJM_hEJU-HDnarjaMsWEVz21Qom84s\"")
     }
 buildFeatures{
     viewBinding = true
     buildConfig = true
 }
+
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -60,6 +67,8 @@ dependencies {
     /*Coroutines*/
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 
 
     /*Room*/

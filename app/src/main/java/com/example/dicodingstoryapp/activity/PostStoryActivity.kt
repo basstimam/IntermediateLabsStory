@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
+
 import com.example.dicodingstoryapp.data.local.DataStorePref
 import com.example.dicodingstoryapp.data.remote.ApiConfig
 import com.example.dicodingstoryapp.data.remote.FileUploadResponse
@@ -24,11 +25,26 @@ import okhttp3.MultipartBody.Part.Companion.createFormData
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
+import android.Manifest.permission
+import android.content.pm.PackageManager
+import android.location.Location
+import androidx.core.content.ContextCompat
+
+
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 class PostStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPostStoryBinding
     private var currentImageUri: Uri? = null
     private lateinit var dataStoreManager: DataStorePref
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+
+
+
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +54,7 @@ class PostStoryActivity : AppCompatActivity() {
         setContentView(binding.root)
         dataStoreManager = DataStorePref.getInstance(this@PostStoryActivity)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         binding.apply {
             galeryFab.setOnClickListener {
@@ -50,9 +67,12 @@ class PostStoryActivity : AppCompatActivity() {
             }
 
             uploadStoryButton.setOnClickListener {
-                uploadImage()
+               getMyLastLocation()
             }
         }
+
+
+
     }
 
 
@@ -105,7 +125,7 @@ class PostStoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadImage() {
+    private fun uploadImage(lat: Double?, lon: Double?) {
         if (binding.descTextEdit.text.toString().isEmpty()) {
             binding.descTextEdit.error = "Deskripsi tidak boleh kosong"
             return
@@ -124,11 +144,19 @@ class PostStoryActivity : AppCompatActivity() {
 
 
 
+
+
+
+
+
             lifecycleScope.launch {
                 try {
 
+
+
+
                     val apiService = ApiConfig().getApiService(dataStoreManager.readToken())
-                    val successResponse = apiService.uploadImage(multipartBody, description)
+                    val successResponse = apiService.uploadImage(multipartBody, description, lat,lon)
 
                     Toast.makeText(this@PostStoryActivity, successResponse.message, Toast.LENGTH_SHORT).show()
 
@@ -143,5 +171,62 @@ class PostStoryActivity : AppCompatActivity() {
                 }
             }
         } ?: Toast.makeText(this, "Gambar tidak ditemukan", Toast.LENGTH_SHORT).show()
+    }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions[permission.ACCESS_FINE_LOCATION] ?: false -> {
+                    // Precise location access granted.
+                    getMyLastLocation()
+                }
+                permissions[permission.ACCESS_COARSE_LOCATION] ?: false -> {
+                    // Only approximate location access granted.
+                    getMyLastLocation()
+                }
+                else -> {
+                    // No location access granted.
+                }
+            }
+        }
+
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            permission
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+    private fun getMyLastLocation() {
+        if     (checkPermission(permission.ACCESS_FINE_LOCATION) &&
+            checkPermission(permission.ACCESS_COARSE_LOCATION)
+        ){
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+
+                    Log.d ("Location", "Latitude: ${location.latitude} Longitude: ${location.longitude}")
+                    uploadImage(location.latitude, location.longitude)
+
+
+
+
+
+
+                } else {
+
+
+                    uploadImage(0.0,0.0)
+
+                }
+            }
+        } else {
+            requestPermissionLauncher.launch(
+                arrayOf(
+                    permission.ACCESS_FINE_LOCATION,
+                   permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
     }
 }

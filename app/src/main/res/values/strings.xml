@@ -47,4 +47,5 @@ Non diam phasellus vestibulum lorem. Ipsum nunc aliquet bibendum enim facilisis 
         Nama tidak boleh kosong minimal 3 karakter.
     </string>
     <string name="retry">Retry</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

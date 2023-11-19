@@ -10,3 +10,5 @@ data class FileUploadResponse(
 	@field:SerializedName("message")
 	val message: String
 )
+
+
