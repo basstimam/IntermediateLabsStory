@@ -5,7 +5,7 @@ import com.example.dicodingstoryapp.data.remote.ListStoryItem
 object DummyData {
     fun generateDummyQuoteResponse(): List<ListStoryItem> {
         val items: MutableList<ListStoryItem> = arrayListOf()
-        for (i in 0..100) {
+        for (i in 0..99999) {
             val story = ListStoryItem(
                 i.toString(),
                 createdAt = null,

@@ -11,7 +11,7 @@ import androidx.paging.PagingState
 import androidx.recyclerview.widget.ListUpdateCallback
 import com.example.dicodingstoryapp.DummyData
 import com.example.dicodingstoryapp.MainDispatcherRule
-import com.example.dicodingstoryapp.adapter.StoryPagingSource
+
 import com.example.dicodingstoryapp.data.local.StoryRepository
 import com.example.dicodingstoryapp.data.remote.ListStoryItem
 import com.example.dicodingstoryapp.getOrAwaitValue
@@ -63,7 +63,10 @@ class HomeViewModelTest{
             differ.submitData(actualStory)
         }
 
-        assertNotNull(differ.snapshot())
+
+
+
+        assertNotNull(differ.snapshot()) //
         assertEquals(dummyStory.size, differ.snapshot().size)
         assertEquals(dummyStory[0], differ.snapshot()[0])
 
