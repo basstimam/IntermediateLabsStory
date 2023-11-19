@@ -18,9 +18,6 @@ import com.example.dicodingstoryapp.databinding.ItemStoryBinding
 class StoryAdapter : PagingDataAdapter<ListStoryItem, StoryAdapter.ViewHolder>(DIFF_CALLBACK) {
 
 
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
@@ -33,8 +30,6 @@ class StoryAdapter : PagingDataAdapter<ListStoryItem, StoryAdapter.ViewHolder>(D
         if (story != null) {
             holder.bind(story)
         }
-
-
 
 
     }
@@ -73,8 +68,8 @@ class StoryAdapter : PagingDataAdapter<ListStoryItem, StoryAdapter.ViewHolder>(D
                     ActivityOptionsCompat.makeSceneTransitionAnimation(
                         itemView.context as Activity,
                         Pair(binding.imageCard, "detailImageStory"),
-Pair(binding.titleCard, "detailTitleStory"),
-Pair(binding.descriptionCard, "detailDescriptionStory"),
+                        Pair(binding.titleCard, "detailTitleStory"),
+                        Pair(binding.descriptionCard, "detailDescriptionStory"),
                         Pair(binding.titleCard, "latitude"),
                         Pair(binding.descriptionCard, "longitude")
 
@@ -94,7 +89,10 @@ Pair(binding.descriptionCard, "detailDescriptionStory"),
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+            override fun areContentsTheSame(
+                oldItem: ListStoryItem,
+                newItem: ListStoryItem
+            ): Boolean {
                 return oldItem == newItem
             }
 
@@ -102,7 +100,6 @@ Pair(binding.descriptionCard, "detailDescriptionStory"),
 
 
     }
-
 
 
 }

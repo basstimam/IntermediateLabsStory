@@ -12,33 +12,29 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlin.concurrent.Volatile
 
-class DataStorePref(val context: Context){
+
+
+class DataStorePref(val context: Context) {
+
+    private val dispatchers = Dispatchers.IO
 
     private val JWT_KEY = "JWT_TOKEN"
-
 
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = JWT_KEY)
 
 
+    suspend fun saveToken(token: String) {
 
+        context.dataStore.edit { jwtToken ->
 
-
-
-
-
-suspend fun saveToken(token: String){
-
-    context.dataStore.edit {
-        jwtToken ->
-
-        jwtToken[TOKEN] = token
+            jwtToken[TOKEN] = token
+        }
     }
-}
 
     fun readToken(): String? {
         return runBlocking {
-            withContext(Dispatchers.IO) {
+            withContext(dispatchers) {
                 // Access the data synchronously
                 val data = context.dataStore.data.first()
 
@@ -48,8 +44,8 @@ suspend fun saveToken(token: String){
         }
     }
 
-    suspend fun deleteToken(): String{
-        context.dataStore.edit {jwtToken ->
+    suspend fun deleteToken(): String {
+        context.dataStore.edit { jwtToken ->
             jwtToken.clear()
         }
         return "Token Deleted"
@@ -62,17 +58,8 @@ suspend fun saveToken(token: String){
     }
 
 
-
-
-
-
-
-
-
-
-
-    companion object{
-        private  val TOKEN = stringPreferencesKey("TOKEN")
+    companion object {
+        private val TOKEN = stringPreferencesKey("TOKEN")
 
         @Volatile
         private var instance: DataStorePref? = null

@@ -29,15 +29,15 @@ class LoginActivity : AppCompatActivity() {
         dataStoreManager = DataStorePref.getInstance(this@LoginActivity)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-       binding.apply {
-                passwordEditText.doOnTextChanged { _, _, _, _ -> validator() }
+        binding.apply {
+            passwordEditText.doOnTextChanged { _, _, _, _ -> validator() }
 
-              emailEditText.doOnTextChanged { _, _, _, _ -> validator() }
+            emailEditText.doOnTextChanged { _, _, _, _ -> validator() }
 
-              loginButton.setOnClickListener {
+            loginButton.setOnClickListener {
                 postLogin()
-              }
-       }
+            }
+        }
 
 
     }
@@ -47,7 +47,9 @@ class LoginActivity : AppCompatActivity() {
         showLoading(true)
 
         binding.apply {
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailEditText.text.toString()).matches()) {
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailEditText.text.toString())
+                    .matches()
+            ) {
                 emailEditTextLayout.error = "Email tidak valid"
                 showLoading(false)
                 return
@@ -64,14 +66,13 @@ class LoginActivity : AppCompatActivity() {
                 )
 
 
-                    dataStoreManager.saveToken(loginResponse.loginResult?.token.toString())
+                dataStoreManager.saveToken(loginResponse.loginResult?.token.toString())
                 Toast.makeText(this@LoginActivity, "Login Success", Toast.LENGTH_SHORT).show(
                 )
                 val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
                 finish()
-
 
 
             } catch (e: Exception) {
@@ -82,15 +83,19 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLoading(state: Boolean)
-    { binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE }
+    private fun showLoading(state: Boolean) {
+        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
+    }
 
     private fun validator() {
         var isValid = true
 
         binding.apply {
-            if (emailEditText.error != null || emailEditText.text.toString().isEmpty()) isValid = false
-            if (passwordEditText.error != null || passwordEditText.text.toString().isEmpty()) isValid = false
+            if (emailEditText.error != null || emailEditText.text.toString().isEmpty()) isValid =
+                false
+            if (passwordEditText.error != null || passwordEditText.text.toString()
+                    .isEmpty()
+            ) isValid = false
 
             loginButton.isEnabled = isValid
         }

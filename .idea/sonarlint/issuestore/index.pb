@@ -152,11 +152,9 @@ Q.idea/sonarlint/securityhotspotstore/f/1/f1fe355e19f0c43df6dd8a83878f334cfc85e9
 Mapp/src/test/java/com/example/dicodingstoryapp/viewmodel/HomeViewModelTest.kt,8\c\8c66bc9d88992c045589935211cf462be004f5b0
 k
 ;app/src/test/java/com/example/dicodingstoryapp/DummyData.kt,0\6\066834e4b2dff83ed739c6e10fe32bd6e0b08507
-|
-Lapp/src/test/java/com/example/dicodingstoryapp/viewmodel/LiveDataTestUtil.kt,0\6\06a7cd73227e8b5880725c41f1adcfe0a4e7eaf8
 r
 Bapp/src/test/java/com/example/dicodingstoryapp/LiveDataTestUtil.kt,0\4\0457716057f53b8fcdc4247cba8ea066cf48f2ae
 t
 Dapp/src/test/java/com/example/dicodingstoryapp/MainDispatcherRule.kt,9\2\92ffde68f5cb0ba52f42c17cad04aeeb53b625ac
-s
-Capp/src/test/java/com/example/dicodingstoryapp/HomeViewModelTest.kt,e\0\e051511170dc844ca9983f6203492d1b4a4a099b
+~
+Napp/src/main/java/com/example/dicodingstoryapp/data/remote/RegisterResponse.kt,3\0\3023e5d22513d6c2f39e467f250e01b039aba40d

@@ -36,9 +36,7 @@ class DetailStoryActivity : AppCompatActivity() {
         }
 
 
-
     }
-
 
 
 }

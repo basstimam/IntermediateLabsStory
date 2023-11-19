@@ -11,7 +11,6 @@ import androidx.paging.PagingState
 import androidx.recyclerview.widget.ListUpdateCallback
 import com.example.dicodingstoryapp.DummyData
 import com.example.dicodingstoryapp.MainDispatcherRule
-
 import com.example.dicodingstoryapp.data.local.StoryRepository
 import com.example.dicodingstoryapp.data.remote.ListStoryItem
 import com.example.dicodingstoryapp.getOrAwaitValue

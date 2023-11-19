@@ -43,50 +43,50 @@ class RegisterActivity : AppCompatActivity() {
         binding.apply {
 
 
-                lifecycleScope.launch {
-                    try {
-                        val registerResponse = ApiConfig().getApiService(null).register(
-                            nameEditText.text.toString(),
-                            emailEditText.text.toString(),
-                            passwordEditText.text.toString()
-                        )
+            lifecycleScope.launch {
+                try {
+                    val registerResponse = ApiConfig().getApiService(null).register(
+                        nameEditText.text.toString(),
+                        emailEditText.text.toString(),
+                        passwordEditText.text.toString()
+                    )
 
 
-                        registerResponse.message?.let { Log.d("RegisterActivity", it) }
+                    registerResponse.message?.let { Log.d("RegisterActivity", it) }
 
-                        if (registerResponse.error == false) {
+                    if (registerResponse.error == false) {
 
-                          Toast.makeText(
-                                this@RegisterActivity,
-                                "Registrasi berhasil",
-                                Toast.LENGTH_SHORT
-                            ).show()
-
-
-                            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            showLoading(false)
-                            registerResponse.message?.let { message ->
-                                Toast.makeText(
-                                    this@RegisterActivity,
-                                    message,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                    } catch (e: Exception) {
-                        showLoading(false)
-
-                        Log.e("RegisterActivity", "Error: ${e.message?.toResponseBody()}")
                         Toast.makeText(
                             this@RegisterActivity,
-                            "Email telah digunakan",
+                            "Registrasi berhasil",
                             Toast.LENGTH_SHORT
                         ).show()
+
+
+                        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        showLoading(false)
+                        registerResponse.message?.let { message ->
+                            Toast.makeText(
+                                this@RegisterActivity,
+                                message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
+                } catch (e: Exception) {
+                    showLoading(false)
+
+                    Log.e("RegisterActivity", "Error: ${e.message?.toResponseBody()}")
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Email telah digunakan",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+            }
 
         }
     }
@@ -103,9 +103,13 @@ class RegisterActivity : AppCompatActivity() {
         var isValid = true
 
         binding.apply {
-            if (nameEditText.error != null || nameEditText.text.toString().isEmpty()) isValid = false
-            if (emailEditText.error != null || emailEditText.text.toString().isEmpty()) isValid = false
-            if (passwordEditText.error != null || passwordEditText.text.toString().isEmpty()) isValid = false
+            if (nameEditText.error != null || nameEditText.text.toString().isEmpty()) isValid =
+                false
+            if (emailEditText.error != null || emailEditText.text.toString().isEmpty()) isValid =
+                false
+            if (passwordEditText.error != null || passwordEditText.text.toString()
+                    .isEmpty()
+            ) isValid = false
 
             registerButton.isEnabled = isValid
         }

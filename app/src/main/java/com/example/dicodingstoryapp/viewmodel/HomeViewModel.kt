@@ -19,9 +19,8 @@ class HomeViewModel(private val storyRepository: StoryRepository) : ViewModel() 
     private val _storyMap = MutableLiveData<List<ListStoryItem>>()
     val storyMap: LiveData<List<ListStoryItem>> = _storyMap
 
-    val pagingStory: LiveData<PagingData<ListStoryItem>> = storyRepository.getStory().cachedIn(viewModelScope)
-
-
+    val pagingStory: LiveData<PagingData<ListStoryItem>> =
+        storyRepository.getStory().cachedIn(viewModelScope)
 
 
     fun getAllStories(token: String) {
@@ -35,14 +34,20 @@ class HomeViewModel(private val storyRepository: StoryRepository) : ViewModel() 
                     _story.value = response.listStory?.filterNotNull()
                     Log.d(TAG, "Success to fetch stories: ${response.listStory?.toString()}")
                 } else {
-                    Log.e(TAG, "Failed to fetch stories: ${response?.message?.toString()}")
+                    Log.e(TAG, "Failed to fetch stories: ${response.message?.toString()}")
                 }
 
                 if (storyMapResponse.error == false) {
                     _storyMap.value = storyMapResponse.listStory?.filterNotNull()
-                    Log.d(TAG, "Success to fetch stories with location: ${storyMapResponse.listStory?.toString()}")
+                    Log.d(
+                        TAG,
+                        "Success to fetch stories with location: ${storyMapResponse.listStory?.toString()}"
+                    )
                 } else {
-                    Log.e(TAG, "Failed to fetch stories with location: ${storyMapResponse?.message?.toString()}")
+                    Log.e(
+                        TAG,
+                        "Failed to fetch stories with location: ${storyMapResponse.message?.toString()}"
+                    )
                 }
 
             } catch (e: Exception) {
@@ -50,7 +55,6 @@ class HomeViewModel(private val storyRepository: StoryRepository) : ViewModel() 
             }
         }
     }
-
 
 
     companion object {

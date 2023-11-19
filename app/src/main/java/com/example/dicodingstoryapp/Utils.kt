@@ -18,7 +18,6 @@ import java.util.Date
 import java.util.Locale
 
 
-
 private const val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
 private val timeStamp: String = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(Date())
 
@@ -43,12 +42,10 @@ fun getImageUri(context: Context): Uri {
 }
 
 
-
-
 fun getImageBeforeQLevel(context: Context): Uri {
     val filesDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
     val imageFile = File(filesDir, "IMG_${timeStamp}.jpg")
-    if(
+    if (
         imageFile.parentFile?.exists() == false
     ) imageFile.parentFile?.mkdir()
 

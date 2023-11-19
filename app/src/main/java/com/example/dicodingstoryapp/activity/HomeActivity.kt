@@ -36,27 +36,27 @@ class HomeActivity : AppCompatActivity() {
         dataStoreManager = DataStorePref.getInstance(this@HomeActivity)
 
 
-binding.apply {
-    logoutFab.setOnClickListener {
-        logoutDialog()
-    }
+        binding.apply {
+            logoutFab.setOnClickListener {
+                logoutDialog()
+            }
 
-    postStoryFab.setOnClickListener{
-        val intent = Intent(this@HomeActivity, PostStoryActivity::class.java)
-        startActivity(intent)
-    }
+            postStoryFab.setOnClickListener {
+                val intent = Intent(this@HomeActivity, PostStoryActivity::class.java)
+                startActivity(intent)
+            }
 
-    mapsFab.setOnClickListener {
-        val intent = Intent(this@HomeActivity, MapsActivity::class.java)
-        startActivity(intent)
-    }
-}
+            mapsFab.setOnClickListener {
+                val intent = Intent(this@HomeActivity, MapsActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
 
 
-lifecycleScope.launch {
-    homeViewModel.getAllStories(dataStoreManager.readToken().toString())
-}
+        lifecycleScope.launch {
+            homeViewModel.getAllStories(dataStoreManager.readToken().toString())
+        }
 
 
         homeViewModel.pagingStory.observe(this) { story ->
@@ -77,7 +77,7 @@ lifecycleScope.launch {
     }
 
 
-    private fun logoutDialog(){
+    private fun logoutDialog() {
         MaterialAlertDialogBuilder(this)
             .setTitle(resources.getString(R.string.logoutDialogTitle))
             .setNeutralButton(resources.getString(R.string.cancel)) { dialog, _ ->

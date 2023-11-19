@@ -42,32 +42,41 @@ class CustomEditText : AppCompatEditText {
             }
 
             override fun onTextChanged(char: CharSequence?, start: Int, before: Int, count: Int) {
-                if (char.toString().isNotEmpty())
+                if (char.toString().isNotEmpty()) {
                     when (inputType) {
-                        InputType.TYPE_TEXT_VARIATION_PASSWORD, 129 -> {
-                            isCharacterPasswordValid =
-                                char.toString().length >= 8
-
-                            error = if (isCharacterPasswordValid) null else passwordValidation
+                        InputType.TYPE_TEXT_VARIATION_PASSWORD, 129 -> char?.let {
+                            handlePasswordValidation(
+                                it
+                            )
                         }
-                        InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS, 33 -> {
-                            isEmailFormatValid =
-                                android.util.Patterns.EMAIL_ADDRESS.matcher(char).matches()
-                            error = if (isEmailFormatValid) null else emailValidation
+                        InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS, 33 -> char?.let {
+                            handleEmailValidation(
+                                it
+                            )
                         }
-
-                        InputType.TYPE_CLASS_TEXT, 1 -> {
-                            isNameValid =
-                                char.toString().length >= 3
-
-                            error = if (isNameValid) null else nameValidation
-                        }
+                        InputType.TYPE_CLASS_TEXT, 1 -> char?.let { handleNameValidation(it) }
                         else -> Log.d("CustomEditText", "onTextChanged: $inputType")
                     }
+                }
+            }
+
+            private fun handlePasswordValidation(char: CharSequence) {
+                isCharacterPasswordValid = char.toString().length >= 8
+                error = if (isCharacterPasswordValid) null else passwordValidation
+            }
+
+            private fun handleEmailValidation(char: CharSequence) {
+                isEmailFormatValid = android.util.Patterns.EMAIL_ADDRESS.matcher(char).matches()
+                error = if (isEmailFormatValid) null else emailValidation
+            }
+
+            private fun handleNameValidation(char: CharSequence) {
+                isNameValid = char.toString().length >= 3
+                error = if (isNameValid) null else nameValidation
             }
 
             override fun afterTextChanged(char: Editable?) {
-
+                //do nothing
             }
         })
     }

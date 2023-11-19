@@ -6,7 +6,7 @@ import androidx.paging.PagingState
 import com.example.dicodingstoryapp.data.remote.ApiService
 import com.example.dicodingstoryapp.data.remote.ListStoryItem
 
-class StoryPagingSource(private val apiService: ApiService): PagingSource<Int, ListStoryItem>() {
+class StoryPagingSource(private val apiService: ApiService) : PagingSource<Int, ListStoryItem>() {
     private companion object {
         const val INITIAL_PAGE_INDEX = 1
     }
@@ -22,11 +22,11 @@ class StoryPagingSource(private val apiService: ApiService): PagingSource<Int, L
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ListStoryItem> {
         return try {
             val position = params.key ?: INITIAL_PAGE_INDEX
-            val responseData = apiService.getStories(position,params.loadSize)
-            val response= responseData.listStory?.filterNotNull() ?: emptyList()
+            val responseData = apiService.getStories(position, params.loadSize)
+            val response = responseData.listStory?.filterNotNull() ?: emptyList()
 
             LoadResult.Page(
-                data = response ,
+                data = response,
                 prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
                 nextKey = position + 1
             )

@@ -38,11 +38,11 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun tokenValidation(){
-        lifecycleScope.launch{
+    private fun tokenValidation() {
+        lifecycleScope.launch {
             val token = dataStoreManager.readToken()
 
-            if(token != null){
+            if (token != null) {
                 val intent = Intent(this@MainActivity, HomeActivity::class.java)
                 startActivity(intent)
                 finish()

@@ -1,27 +1,23 @@
 package com.example.dicodingstoryapp.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import com.example.dicodingstoryapp.R
 import com.example.dicodingstoryapp.data.local.DataStorePref
-import com.example.dicodingstoryapp.data.remote.ListStoryItem
-
+import com.example.dicodingstoryapp.databinding.ActivityMapsBinding
+import com.example.dicodingstoryapp.viewmodel.HomeViewModel
+import com.example.dicodingstoryapp.viewmodel.ViewmodelFactory
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.example.dicodingstoryapp.databinding.ActivityMapsBinding
-import com.example.dicodingstoryapp.viewmodel.HomeViewModel
-import com.example.dicodingstoryapp.viewmodel.ViewmodelFactory
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -81,24 +77,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         viewModel.storyMap.observe(this) { list ->
             Log.d("MAPS", "onMapReady: $list")
 
-           list.forEach{
-               storyLocation ->
-               val latLng = LatLng(storyLocation.lat!!, storyLocation.lon!!)
+            list.forEach { storyLocation ->
+                val latLng = LatLng(storyLocation.lat!!, storyLocation.lon!!)
                 val markerOptions = MarkerOptions()
-                     .position(latLng)
-                     .title(storyLocation.name)
-                     .snippet(storyLocation.description)
+                    .position(latLng)
+                    .title(storyLocation.name)
+                    .snippet(storyLocation.description)
 
                 mMap.addMarker(markerOptions)
-               boundsBuilder.include(latLng)
-           }
+                boundsBuilder.include(latLng)
+            }
 
             val bounds = boundsBuilder.build()
             mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
         }
-
-
-
 
 
     }
